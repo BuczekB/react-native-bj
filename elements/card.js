@@ -28,4 +28,3 @@ const styles = StyleSheet.create({
 })
 
 
-//style={{ backgroundColor: '#558', width: 50, height: 100, }
