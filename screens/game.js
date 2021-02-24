@@ -65,23 +65,48 @@ export default function Game({ route, navigation }) {
         let cardCode = deck[count].code;
         const deckCard = []
 
+        const moreCards = () => {
+
+            console.log('wyzej niz 10');
+            cardValue = deck[count].value
+            cardimage = deck[count].image;
+            cardCode = deck[count].code;
+            deckCard.push(cardimage)
+            points += 10
+            count += 1
+
+
+        }
 
 
         while (points <= 15) {
-
+            cardValue = deck[count].value
+            console.log(`cardvalue ${cardValue}`);
             switch (cardValue) {
-                case 'JACK' || 'KING' || 'ACE' || 'QUEEN':
-                    cardValue = deck[count].value
-                    cardimage = deck[count].image;
-                    cardCode = deck[count].code;
-                    deckCard.push(cardimage)
-                    points += 10
-                    count += 1
+                case 'QUEEN':
+                    moreCards()
+
+                    break;
+
+                case 'KING':
+                    moreCards()
+
+                    break;
+
+                case 'JACK':
+                    moreCards()
+
+                    break;
+
+                case 'ACE':
+                    moreCards()
 
                     break;
 
 
+
                 default:
+                    console.log('nizej niz 10');
                     cardValue = deck[count].value
                     cardimage = deck[count].image;
                     cardCode = deck[count].code;
@@ -101,27 +126,98 @@ export default function Game({ route, navigation }) {
         const cardsToPrint = deckCard.map((item) => {
             return (<Card cardUrl={item} />)
         })
-
+        setCounter(count)
         setDeckDealer(cardsToPrint)
 
+
+        playerCards()
     }
 
+
+    const playerCards = () => {
+        let count = counter
+        let points = 0;
+        let cardValue = deck[count].value
+        let cardimage = deck[count].image;
+        let cardCode = deck[count].code;
+        const deckCard = []
+
+
+
+
+        const moreCards = () => {
+
+            console.log('wyzej niz 10');
+            cardValue = deck[count].value
+            cardimage = deck[count].image;
+            cardCode = deck[count].code;
+            deckCard.push(cardimage)
+            points += 10
+            count += 1
+
+
+
+        }
+
+
+        switch (cardValue) {
+            case 'JACK':
+                moreCards()
+
+                break;
+
+            case 'QUEEN':
+                moreCards()
+
+                break;
+
+            case 'ACE':
+                moreCards()
+
+                break;
+
+            case 'KING':
+                moreCards()
+
+                break;
+
+
+            default:
+                cardValue = deck[count].value
+                cardimage = deck[count].image;
+                cardCode = deck[count].code;
+                deckCard.push(cardimage)
+                const intValue = parseInt(cardValue)
+                points += intValue
+                count += 1
+
+                break;
+
+        }
+
+        setCounter(count)
+        setVariableP((prev) => {
+            return [
+                { image: deckCard },
+                ...prev
+            ]
+        })
+
+
+        cards()
+
+
+    }
 
     const cards = () => {
 
 
-
-        const tescik = deckDealer.map((item) => {
-            return (<Card cardUrl={item.cardimage} />)
+        const cardsToPrint = variableP.map((item) => {
+            return (<Card cardUrl={item.image} />)
         })
 
-        console.log(deckDealer);
-        setVariableD(tescik)
-
-
-        test()
+        setDeckPlayer(cardsToPrint)
     }
-
 
 
 
@@ -142,12 +238,12 @@ export default function Game({ route, navigation }) {
                     {deckDealer}
                 </View>
                 <View style={styles.playerCards}>
-                    {variableP}
+                    {deckPlayer}
                 </View>
                 <View style={styles.buttons}>
-                    <Text style={styles.button} onPress={() => dealerCards()}>1</Text>
-                    <Text style={styles.button} onPress={() => cards()}>2</Text>
-                    <Text style={styles.button} onPress={() => playerCards()}>3(x)</Text>
+                    <Text style={styles.button} onPress={() => dealerCards()}>Dealer cards</Text>
+                    <Text style={styles.button} > empty</Text>
+                    <Text style={styles.button} onPress={() => playerCards()}>Player cards</Text>
                 </View>
             </View>
         )
