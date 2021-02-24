@@ -58,45 +58,38 @@ export default function Game({ route, navigation }) {
 
     const dealerCards = () => {
 
-
+        let count = 0
         let points = 0;
-        console.log(deck[0].value);
-        console.log(deck[1].value);
+        let cardValue = deck[count].value
+        let cardimage = deck[count].image;
+        let cardCode = deck[count].code;
+        const deckCard = []
 
 
 
         while (points <= 15) {
-            let cardValue = deck[counter].value
-            let cardimage = deck[counter].image;
-            let cardCode = deck[counter].code;
-            console.log(counter);
-
 
             switch (cardValue) {
                 case 'JACK' || 'KING' || 'ACE' || 'QUEEN':
-                    console.log(cardValue);
+                    cardValue = deck[count].value
+                    cardimage = deck[count].image;
+                    cardCode = deck[count].code;
+                    deckCard.push(cardimage)
                     points += 10
-                    setCounter(prevCounter => prevCounter + 1)
-                    setDeckDealer((prevDeck) => {
-                        return [
-                            { cardimage },
-                            ...prevDeck
-                        ];
-                    })
+                    count += 1
+
                     break;
 
 
                 default:
-                    console.log(cardValue);
+                    cardValue = deck[count].value
+                    cardimage = deck[count].image;
+                    cardCode = deck[count].code;
+                    deckCard.push(cardimage)
                     const intValue = parseInt(cardValue)
                     points += intValue
-                    setCounter(prevCounter => prevCounter + 1)
-                    setDeckDealer((prevDeck) => {
-                        return [
-                            { cardimage },
-                            ...prevDeck
-                        ];
-                    })
+                    count += 1
+
                     break;
 
             }
@@ -105,8 +98,11 @@ export default function Game({ route, navigation }) {
 
         }
 
+        const cardsToPrint = deckCard.map((item) => {
+            return (<Card cardUrl={item} />)
+        })
 
-
+        setDeckDealer(cardsToPrint)
 
     }
 
@@ -126,48 +122,7 @@ export default function Game({ route, navigation }) {
         test()
     }
 
-    const test = () => {
-        setCounter(counter + 1)
-        const cardimage = deck[counter].image
-        setDeckPlayer((prevDeck) => {
-            return [
-                { cardimage },
-                ...prevDeck
-            ];
 
-        })
-
-    }
-
-
-    const playerCards = () => {
-        let points = 0
-        setCounter(counter + 1)
-        const cardimage = deck[counter].image
-        setDeckPlayer((prevDeck) => {
-            return [
-                { cardimage },
-                ...prevDeck
-            ];
-
-        })
-
-
-        cardsP()
-    }
-
-
-    const cardsP = () => {
-
-
-        const tescik = deckPlayer.map((item) => {
-            return (<Card cardUrl={item.cardimage} />)
-        })
-
-        console.log(deckPlayer);
-        setVariableP(tescik)
-
-    }
 
 
 
@@ -184,7 +139,7 @@ export default function Game({ route, navigation }) {
                     <Text style={styles.scoreText}>Money:{money}</Text>
                 </View>
                 <View style={styles.dealerCards}>
-                    {variableD}
+                    {deckDealer}
                 </View>
                 <View style={styles.playerCards}>
                     {variableP}
